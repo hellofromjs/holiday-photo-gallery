@@ -1,16 +1,17 @@
-import { sendPasswordReset } from "../../services/AuthServices";
-import useFormValidation from "../../libraries/form-validation/hooks/useFormValidation";
-import FormInput from "../../libraries/form-validation/components/FormInput";
-import { isEmailValid } from "../../utilities/validate";
+import { resetPassword } from "../../../services/user";
+import useFormValidation from "../../../libraries/form-validation/hooks/useFormValidation";
+import FormInput from "../../../libraries/form-validation/components/FormInput";
+import { isEmailValid } from "../../../utilities/validate";
 
 const Reset = () => {
 	const [formData, formRef, handleInputValue, isFormValid] =
 		useFormValidation();
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		sendPasswordReset(formData.email.value);
+		await resetPassword(formData.email.value);
 	};
+
 	return (
 		<div className="container">
 			<h2 className="mt-3 text-center">Atstatykite slaptazodi</h2>

@@ -1,0 +1,24 @@
+.layout-selection.show {
+	background-color: rgba(0, 0, 0, 0.6);
+	padding: 35px 30px;
+	border-radius: 40px;
+	border: 3px solid white;
+
+	.layout-selection__header {
+		color: white;
+		text-align: center;
+		padding-bottom: 35px;
+		margin: 0;
+	}
+
+	.layout-selection__images {
+		display: grid !important;
+		grid-template-columns: 1fr 1fr 1fr;
+		gap: 15px;
+
+
+		.layout-selection__images__img {
+			cursor: pointer;
+		}
+	}
+}

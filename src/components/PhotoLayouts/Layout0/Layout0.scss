@@ -1,9 +1,10 @@
 @import '../../../scss/variables.scss';
 
-.layout-3 {
+.layout-0 {
+	margin-bottom: $gapMedium;
+
 	&__img {
+		clip-path: circle();
 		aspect-ratio: 1/1;
-		object-fit: cover;
-		padding: $gapMedium;
 	}
 }

@@ -1,12 +1,14 @@
-import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, signInWithEmailAndPassword } from "../../services/AuthServices";
-import { isEmailValid, isPasswordValid } from "../../utilities/validate";
-import FormInput from "../../libraries/form-validation/components/FormInput";
-import useFormValidation from "../../libraries/form-validation/hooks/useFormValidation";
+import { auth } from "../../../config/firebase";
+import FormInput from "../../../libraries/form-validation/components/FormInput";
+import { register } from "../../../services/user";
 
-const Login = () => {
+import useFormValidation from "../../../libraries/form-validation/hooks/useFormValidation";
+import { isEmailValid, isPasswordValid } from "../../../utilities/validate";
+
+const Register = () => {
 	const [formData, formRef, handleInputValue, isFormValid] =
 		useFormValidation();
 
@@ -16,7 +18,8 @@ const Login = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		await signInWithEmailAndPassword(
+		await register(
+			formData.name.value,
 			formData.email.value,
 			formData.password.value
 		);
@@ -29,9 +32,26 @@ const Login = () => {
 
 	return (
 		<div className="container">
-			<h2 className="mt-3 text-center">Prisijungti</h2>
+			<h2 className="mt-3 text-center">Registruokis</h2>
 
 			<form className="form" onSubmit={handleSubmit} ref={formRef}>
+				<div className="mb-3">
+					<FormInput
+						onChange={handleInputValue}
+						name="name"
+						type="text"
+						className="form-control"
+						placeholder="Jusu vardas"
+						errorMessage="Vardas turi buti tarp 3 ir 12 raidziu"
+						value={formData?.name.value}
+						validation={(value) => {
+							if (value.length >= 3 && value.length <= 12) {
+								return true;
+							}
+							return false;
+						}}
+					/>
+				</div>
 				<div className="mb-3">
 					<FormInput
 						onChange={handleInputValue}
@@ -62,16 +82,12 @@ const Login = () => {
 						type="submit"
 						disabled={!isFormValid(formData)}
 					>
-						Prisijungti
+						Registruotis
 					</button>
 				</div>
 				<div>
 					<p>
-						Neturite paskyros? <Link to="/register">Galite registruotis</Link>
-					</p>
-					<p>
-						Nepavyksta prisijungti?{" "}
-						<Link to="/password-reset">Atstatykite slaptazodi</Link>
+						Turite pasyra? <Link to="/">Galite prisijungti</Link>
 					</p>
 				</div>
 			</form>
@@ -79,4 +95,4 @@ const Login = () => {
 	);
 };
 
-export default Login;
+export default Register;

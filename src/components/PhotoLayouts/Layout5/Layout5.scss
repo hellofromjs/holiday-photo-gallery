@@ -1,0 +1,18 @@
+@import '../../../scss/variables.scss';
+
+.layout-5 {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: $gapSmall;
+	margin-bottom: $gapSmall;
+
+	&__img-circle {
+		clip-path: circle();
+		height: 100% !important;
+	}
+
+	&__img-square {
+		aspect-ratio: 1/1;
+		object-fit: cover;
+	}
+}

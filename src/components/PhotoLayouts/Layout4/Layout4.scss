@@ -1,0 +1,12 @@
+@import '../../../scss/variables.scss';
+
+.layout-4 {
+	display: grid;
+	gap: $gapSmall;
+	margin-bottom: $gapSmall;
+	grid-template-rows: 1fr 1fr;
+
+	&__img {
+		aspect-ratio: 16/9;
+	}
+}

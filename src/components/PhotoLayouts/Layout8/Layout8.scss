@@ -1,12 +1,12 @@
 @import '../../../scss/variables.scss';
 
-.layout-6 {
+.layout-8 {
 	display: grid;
-	grid-template-columns: 1fr 2fr;
+	grid-template-columns: 2fr 1fr;
 	gap: $gapSmall;
 	margin-bottom: $gapSmall;
 
-	&__left {
+	&__right {
 		display: flex;
 		flex-flow: column;
 		gap: $gapSmall;

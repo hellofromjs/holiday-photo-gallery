@@ -1,3 +1,13 @@
+@import '../../../scss/variables.scss';
+
 .layout-1 {
-    clip-path: circle();
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: $gapSmall;
+	margin-bottom: $gapLarge;
+
+	&__img {
+		aspect-ratio: 9/11;
+		object-fit: cover;
+	}
 }

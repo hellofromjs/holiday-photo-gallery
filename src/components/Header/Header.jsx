@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
-import User from "../User/User";
+import UserOptions from "../UserOptions/UserOptions";
 
 export default function Header() {
 	return (
 		<nav className="navbar bg-body-tertiary">
-			<div className="container-fluid">
+			<div className="container">
 				<Link to='/' className="navbar-brand">
-					Holyday photos
+					Holiday Photos
 				</Link>
-				<User/>
+				<UserOptions/>
 			</div>
 		</nav>
 	);

@@ -1,66 +1,98 @@
-import { useEffect, useRef, useState } from "react"
-import * as bootstrap from 'bootstrap/dist/js/bootstrap'
-import { FaPlusCircle } from "react-icons/fa"
-import * as service from "../../services/TimesCrudService";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../services/AuthServices";
+import { useRef } from "react";
+import { FaPlusCircle } from "react-icons/fa";
+import * as bootstrap from "bootstrap/dist/js/bootstrap";
+import { addPhoto } from "../../services/photo";
+import useFormValidation from "../../libraries/form-validation/hooks/useFormValidation";
+import FormInput from "../../libraries/form-validation/components/FormInput";
 
-const { Modal } = bootstrap
+const { Modal } = bootstrap;
 
 export default function AddPhotoModal() {
-    const [user, _loading, _error] = useAuthState(auth);
+	const [formData, formRef, handleInputValue, isFormValid] =
+		useFormValidation();
 
-    const [photoUrl, setPhotoUrl] = useState('https://media.istockphoto.com/id/1154783597/photo/idyllic-landscape-in-the-alps-with-blooming-meadows-in-springtime.jpg?s=1024x1024&w=is&k=20&c=igU9Lg7-AqGUQBkQwkmmzCf5HamYZ17P7thAKJPtfAc=')
-    const modalRef = useRef()
-    
-    const showModal = () => {
-        const modalEle = modalRef.current
-        const bsModal = new Modal(modalEle, {
-            backdrop: 'static',
-            keyboard: false
-        })
-        bsModal.show()
-    }
-    
-    const hideModal = () => {
-        const modalEle = modalRef.current
-        const bsModal= bootstrap.Modal.getInstance(modalEle)
-        bsModal.hide()
-    }
-    
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log(photoUrl)
+	const modalRef = useRef();
 
-        service.addWork({ url: photoUrl, uid: user.uid });
+	const showModal = () => {
+		const modalEle = modalRef.current;
+		const bsModal = new Modal(modalEle, {
+			backdrop: "static",
+			keyboard: false,
+		});
+		bsModal.show();
+	};
 
-        hideModal()
-    }
+	const hideModal = () => {
+		const modalEle = modalRef.current;
+		const bsModal = bootstrap.Modal.getInstance(modalEle);
+		bsModal.hide();
+	};
 
-    return(
-        <div className="addEmployee">
-            <button type="button" className="btn btn-primary" onClick={showModal}><FaPlusCircle size={20}/>Add Photo</button>
-            <div className="modal fade" ref={modalRef} tabIndex="-1" >
-             <div className="modal-dialog">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h5 className="modal-title" id="staticBackdropLabel">Modal title</h5>
-                    <button type="button" className="btn-close" onClick={hideModal} aria-label="Close"></button>
-                  </div>
-                  <div className="modal-body">
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="recipient-name" className="col-form-label">Photo URL:</label>
-            <input onChange={(e)=>setPhotoUrl(e.target.value)} type="text" className="form-control" id="recipient-name"/>
-          </div>
-          <button type="button" className="btn btn-secondary" onClick={hideModal}>Close</button>
-                    <button role="button" type="submit" className="btn btn-primary">Add</button>
-        </form>
-                  </div>
-               
-                </div>
-              </div>
-            </div>
-        </div>
-    )
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		await addPhoto(formData.url.value);
+		hideModal();
+	};
+
+	return (
+		<div>
+			<button
+				type="button"
+				className="btn btn-primary d-flex align-items-center gap-2"
+				onClick={showModal}
+			>
+				<FaPlusCircle size={20} />
+				Add Photo
+			</button>
+			<div className="modal fade" ref={modalRef} tabIndex="-1">
+				<div className="modal-dialog">
+					<div className="modal-content">
+						<div className="modal-header">
+							<h5 className="modal-title" id="staticBackdropLabel">
+								Add Photo
+							</h5>
+							<button
+								type="button"
+								className="btn-close"
+								onClick={hideModal}
+								aria-label="Close"
+							></button>
+						</div>
+						<div className="modal-body">
+							<form onSubmit={handleSubmit} ref={formRef}>
+								<div className="mb-3">
+									<FormInput
+										onChange={handleInputValue}
+										name="url"
+										type="text"
+										className="form-control"
+										placeholder="Photo URL"
+										errorMessage="URL must start with http"
+										label="Photo URL:"
+										value={formData?.url.value}
+										validation={(value) => {
+											if (value.startsWith("http")) {
+												return true;
+											} else {
+												return false;
+											}
+										}}
+									/>
+								</div>
+								<button
+									style={{ marginLeft: "auto", display: "block" }}
+									role="button"
+									type="submit"
+									className="btn btn-primary"
+									disabled={!isFormValid(formData)}
+								>
+									Add
+								</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 }
