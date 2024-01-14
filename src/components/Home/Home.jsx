@@ -27,7 +27,6 @@ export default function Home() {
 				<AddPhotoModal />
 				<LayoutSelection onSelect={setSelectedLayout} />
 			</div>
-
 			<PhotoLayoutContainer layoutIndex={selectedLayout} photos={photos} />
 		</div>
 	);

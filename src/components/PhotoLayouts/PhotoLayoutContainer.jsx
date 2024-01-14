@@ -52,7 +52,6 @@ export default function PhotoLayoutContainer({ layoutIndex, photos }) {
 
 	const SelectedLayout = layouts[layoutIndex].layout;
 
-
 	function layoutBlocks() {
 		let current = [];
 		const elements = [];
@@ -73,10 +72,5 @@ export default function PhotoLayoutContainer({ layoutIndex, photos }) {
 		return elements;
 	}
 
-
-	return (
-		<div>
-			{layoutBlocks()}
-		</div>
-	);
+	return <main>{layoutBlocks()}</main>;
 }
