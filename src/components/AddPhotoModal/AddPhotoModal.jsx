@@ -8,7 +8,7 @@ import FormInput from "../../libraries/form-validation/components/FormInput";
 const { Modal } = bootstrap;
 
 export default function AddPhotoModal() {
-	const [formData, formRef, handleInputValue, isFormValid] =
+	const [formData, formRef, handleInputValue, isFormValid, _, setFormNewData] =
 		useFormValidation();
 
 	const modalRef = useRef();
@@ -31,6 +31,7 @@ export default function AddPhotoModal() {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		await addPhoto(formData.url.value);
+		setFormNewData({ url: undefined });
 		hideModal();
 	};
 
@@ -67,7 +68,7 @@ export default function AddPhotoModal() {
 										type="text"
 										className="form-control"
 										placeholder="Photo URL"
-										errorMessage="URL must start with http"
+										errorMessage="URL must start with 'http...'"
 										label="Photo URL:"
 										value={formData?.url.value}
 										validation={(value) => {

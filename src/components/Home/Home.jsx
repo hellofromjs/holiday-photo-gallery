@@ -1,22 +1,21 @@
-import AddPhotoModal from "../AddPhotoModal/AddPhotoModal";
 import { useEffect, useState } from "react";
-import { getAllPhotosSubscribed } from "../../services/photo";
-import { auth } from "../../config/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-
+import AddPhotoModal from "../AddPhotoModal/AddPhotoModal";
+import { getAllUserPhotosLive } from "../../services/photo";
+import { auth } from "../../config/firebase";
 import PhotoLayoutContainer from "../PhotoLayouts/PhotoLayoutContainer";
 import LayoutSelection from "../LayoutSelection/LayoutSelection";
 
 export default function Home() {
 	const [selectedLayout, setSelectedLayout] = useState(7);
-	const [works, setWorks] = useState([]);
+	const [photos, setPhotos] = useState([]);
 	const [user, loading, _error] = useAuthState(auth);
 
 	useEffect(() => {
 		if (loading) return;
 
 		if (user) {
-			getAllPhotosSubscribed(setWorks);
+			getAllUserPhotosLive(setPhotos);
 		}
 	}, [user, loading]);
 
@@ -29,7 +28,7 @@ export default function Home() {
 				<LayoutSelection onSelect={setSelectedLayout} />
 			</div>
 
-			<PhotoLayoutContainer layoutIndex={selectedLayout} photos={works} />
+			<PhotoLayoutContainer layoutIndex={selectedLayout} photos={photos} />
 		</div>
 	);
 }

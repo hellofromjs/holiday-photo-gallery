@@ -7,6 +7,8 @@ export default function useFormValidation() {
 	const formRef = useRef(null);
 
 	useEffect(() => {
+		if (formRef.current == null) return;
+		
 		const formControls = formRef.current.elements;
 
 		const formElements = {};
@@ -21,8 +23,9 @@ export default function useFormValidation() {
 				});
 			}
 		}
+
 		setFormData(() => formElements);
-	}, []);
+	}, [formRef]);
 
 	useEffect(() => {
 		if (formData !== undefined) {

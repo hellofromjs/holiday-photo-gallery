@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../config/firebase";
 import * as userService from "../../services/user";
@@ -33,10 +33,14 @@ export default function UserOptions() {
 					</button>
 					<ul className="dropdown-menu dropdown-menu-end">
 						<li className="dropdown-item">
-							{auth?.currentUser?.email}
+							<a className="dropdown-item" href="#">
+								{auth?.currentUser?.email}
+							</a>
 						</li>
 						<li className="dropdown-item" onClick={userService.logout}>
-							Atsijungti
+							<a className="dropdown-item" href="#">
+								Atsijungti
+							</a>
 						</li>
 					</ul>
 				</div>

@@ -9,14 +9,14 @@ const photosCollectionRef = collection(db, 'photos');
 
 
 const deletePhoto = async (id) => {
-	const workDocRef = doc(photosCollectionRef, id);
+	const photosDocRef = doc(photosCollectionRef, id);
 
-	await deleteDoc(workDocRef).catch(e => console.log(e));
+	await deleteDoc(photosDocRef).catch(e => console.log(e));
 };
 
-const getAllPhotosSubscribed = async (onPhotosCollectionChanged) => {
-
-	onSnapshot(photosCollectionRef, snapshot => {
+const getAllUserPhotosLive = async (onPhotosCollectionChanged) => {
+	const q = query(photosCollectionRef, where("userId", "==", auth.currentUser.uid));
+	onSnapshot(q, snapshot => {
 		const data = snapshot.docs.map(doc => ({
 			...doc.data(),
 			id: doc.id,
@@ -38,6 +38,6 @@ const addPhoto = async (url) => {
 
 export {
 	deletePhoto,
-	getAllPhotosSubscribed,
+	getAllUserPhotosLive,
 	addPhoto,
 };

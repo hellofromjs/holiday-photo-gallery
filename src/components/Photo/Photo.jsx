@@ -1,8 +1,8 @@
 import { useState } from "react";
-import "./Photo.scss";
+import { MdDeleteForever } from "react-icons/md";
 import { deletePhoto } from "../../services/photo";
 import FullScreenImage from "../FullScreenImage/FullScreenImage";
-import { MdDeleteForever } from "react-icons/md";
+import "./Photo.scss";
 
 export default function Photo({ className, data }) {
 	const [isOpen, setIsOpen] = useState(false);

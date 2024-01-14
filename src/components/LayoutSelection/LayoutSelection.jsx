@@ -1,5 +1,4 @@
 import "./LayoutSelection.scss";
-
 import layoutIcon0 from "../../assets/images/layout-icons/0.jpg";
 import layoutIcon1 from "../../assets/images/layout-icons/1.jpg";
 import layoutIcon2 from "../../assets/images/layout-icons/2.jpg";
@@ -37,11 +36,14 @@ export default function LayoutSelection({ onSelect }) {
 			<div className="dropdown-menu layout-selection">
 				<h2 className="layout-selection__header">Format</h2>
 				<div className="layout-selection__images">
-					{icons.map((icon, i) => 	<img key={i}
-						onClick={() => onSelect(i)}
-						src={icon}
-						className="layout-selection__images__img"
-					/>)}
+					{icons.map((icon, i) => (
+						<img
+							key={i}
+							onClick={() => onSelect(i)}
+							src={icon}
+							className="layout-selection__images__img"
+						/>
+					))}
 				</div>
 			</div>
 		</div>

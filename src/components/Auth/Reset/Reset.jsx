@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { resetPassword } from "../../../services/user";
 import useFormValidation from "../../../libraries/form-validation/hooks/useFormValidation";
 import FormInput from "../../../libraries/form-validation/components/FormInput";
@@ -13,18 +14,22 @@ const Reset = () => {
 	};
 
 	return (
-		<div className="container">
-			<h2 className="mt-3 text-center">Atstatykite slaptazodi</h2>
+		<div className="auth-border">
+			<h2 className="mt-3 text-center auth-header">Password Reset</h2>
 
-			<form className="form" onSubmit={handleSubmit} ref={formRef}>
+			<form
+				className="form auth-email-form"
+				onSubmit={handleSubmit}
+				ref={formRef}
+			>
 				<div className="mb-3">
 					<FormInput
 						onChange={handleInputValue}
 						name="email"
 						type="email"
 						className="form-control"
-						placeholder="Jusu emailas"
-						errorMessage="Toks emailas nera leistinas"
+						placeholder="Email"
+						errorMessage="Invalid email"
 						value={formData?.email.value}
 						validation={isEmailValid}
 					/>
@@ -35,10 +40,19 @@ const Reset = () => {
 						type="submit"
 						disabled={!isFormValid(formData)}
 					>
-						Siusti
+						Send
 					</button>
 				</div>
 			</form>
+
+			<div className="auth-help">
+				<p className="auth-help__item">
+					No account? <Link to="/register">Create one</Link>
+				</p>
+				<p className="auth-help__item">
+					Have an account? <Link to="/">Sign in</Link>
+				</p>
+			</div>
 		</div>
 	);
 };

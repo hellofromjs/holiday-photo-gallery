@@ -15,7 +15,7 @@ export default ({ mode }) => {
 		plugins: [react()],
 		resolve: {
 			alias: {
-				'~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
+				'~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap/scss'),
 			}
 		},
 		base: `/${process.env.VITE_REPO_NAME}`,

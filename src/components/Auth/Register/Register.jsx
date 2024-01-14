@@ -1,14 +1,20 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../config/firebase";
 import FormInput from "../../../libraries/form-validation/components/FormInput";
 import { register } from "../../../services/user";
-
 import useFormValidation from "../../../libraries/form-validation/hooks/useFormValidation";
 import { isEmailValid, isPasswordValid } from "../../../utilities/validate";
+import Alert from "../../Alert/Alert";
 
 const Register = () => {
+	const [alertData, setAlertData] = useState({
+		isOpen: false,
+		text: "",
+		status: undefined,
+	});
+
 	const [formData, formRef, handleInputValue, isFormValid] =
 		useFormValidation();
 
@@ -18,11 +24,19 @@ const Register = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		await register(
+		const result = await register(
 			formData.name.value,
 			formData.email.value,
 			formData.password.value
 		);
+
+		if (result?.error) {
+			setAlertData({
+				isOpen: true,
+				text: result.error.message,
+				status: "danger",
+			});
+		}
 	};
 
 	useEffect(() => {
@@ -31,18 +45,26 @@ const Register = () => {
 	}, [user, loading]);
 
 	return (
-		<div className="container">
-			<h2 className="mt-3 text-center">Registruokis</h2>
+		<div className="auth-border">
+			<h2 className="mt-3 text-center auth-header">Join Us</h2>
 
-			<form className="form" onSubmit={handleSubmit} ref={formRef}>
+			<form
+				className="form auth-email-form"
+				onSubmit={handleSubmit}
+				ref={formRef}
+			>
+				{alertData.isOpen && (
+					<Alert text={alertData.text} status={alertData.status} />
+				)}
+
 				<div className="mb-3">
 					<FormInput
 						onChange={handleInputValue}
 						name="name"
 						type="text"
 						className="form-control"
-						placeholder="Jusu vardas"
-						errorMessage="Vardas turi buti tarp 3 ir 12 raidziu"
+						placeholder="Name"
+						errorMessage="Name must be between 3 and 12 characters long"
 						value={formData?.name.value}
 						validation={(value) => {
 							if (value.length >= 3 && value.length <= 12) {
@@ -58,8 +80,8 @@ const Register = () => {
 						name="email"
 						type="email"
 						className="form-control"
-						placeholder="Jusu emailas"
-						errorMessage="Toks emailas nera leistinas"
+						placeholder="Email"
+						errorMessage="Invalid email"
 						value={formData?.email.value}
 						validation={isEmailValid}
 					/>
@@ -70,8 +92,8 @@ const Register = () => {
 						name="password"
 						type="password"
 						className="form-control"
-						placeholder="Slaptazodis"
-						errorMessage="Slaptazodis turi buti bent 6 simboliai"
+						placeholder="Password"
+						errorMessage="Password must be at least 6 characters long"
 						value={formData?.password.value}
 						validation={isPasswordValid}
 					/>
@@ -82,15 +104,19 @@ const Register = () => {
 						type="submit"
 						disabled={!isFormValid(formData)}
 					>
-						Registruotis
+						Sign Up
 					</button>
 				</div>
-				<div>
-					<p>
-						Turite pasyra? <Link to="/">Galite prisijungti</Link>
-					</p>
-				</div>
 			</form>
+
+			<div className="auth-help">
+				<p className="auth-help__item">
+					Have an account? <Link to="/">Sign in</Link>
+				</p>
+				<p className="auth-help__item">
+					Trouble signing in? <Link to="/password-reset">Reset password</Link>
+				</p>
+			</div>
 		</div>
 	);
 };
