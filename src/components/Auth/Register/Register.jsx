@@ -5,7 +5,11 @@ import { auth } from "../../../config/firebase";
 import FormInput from "../../../libraries/form-validation/components/FormInput";
 import { register } from "../../../services/user";
 import useFormValidation from "../../../libraries/form-validation/hooks/useFormValidation";
-import { isEmailValid, isPasswordValid } from "../../../utilities/validate";
+import {
+	isEmailValid,
+	isNameValid,
+	isPasswordValid,
+} from "../../../utilities/validate";
 import Alert from "../../Alert/Alert";
 
 const Register = () => {
@@ -64,14 +68,8 @@ const Register = () => {
 						type="text"
 						className="form-control"
 						placeholder="Name"
-						errorMessage="Name must be between 3 and 12 characters long"
 						value={formData?.name.value}
-						validation={(value) => {
-							if (value.length >= 3 && value.length <= 12) {
-								return true;
-							}
-							return false;
-						}}
+						validation={isNameValid}
 					/>
 				</div>
 				<div className="mb-3">
@@ -81,7 +79,6 @@ const Register = () => {
 						type="email"
 						className="form-control"
 						placeholder="Email"
-						errorMessage="Invalid email"
 						value={formData?.email.value}
 						validation={isEmailValid}
 					/>
@@ -93,7 +90,6 @@ const Register = () => {
 						type="password"
 						className="form-control"
 						placeholder="Password"
-						errorMessage="Password must be at least 6 characters long"
 						value={formData?.password.value}
 						validation={isPasswordValid}
 					/>

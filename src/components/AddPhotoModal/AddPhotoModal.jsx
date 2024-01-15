@@ -4,6 +4,7 @@ import * as bootstrap from "bootstrap/dist/js/bootstrap";
 import { addPhoto } from "../../services/photo";
 import useFormValidation from "../../libraries/form-validation/hooks/useFormValidation";
 import FormInput from "../../libraries/form-validation/components/FormInput";
+import { isUrlValid } from "../../utilities/validate";
 
 const { Modal } = bootstrap;
 
@@ -68,16 +69,9 @@ export default function AddPhotoModal() {
 										type="text"
 										className="form-control"
 										placeholder="Photo URL"
-										errorMessage="URL must start with 'http...'"
 										label="Photo URL:"
 										value={formData?.url.value}
-										validation={(value) => {
-											if (value.startsWith("http")) {
-												return true;
-											} else {
-												return false;
-											}
-										}}
+										validation={isUrlValid}
 									/>
 								</div>
 								<button

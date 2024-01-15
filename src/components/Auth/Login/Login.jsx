@@ -64,7 +64,6 @@ const Login = () => {
 							type="email"
 							className="form-control"
 							placeholder="Email"
-							errorMessage="Invalid email"
 							value={formData?.email?.value}
 							validation={isEmailValid}
 						/>
@@ -76,7 +75,6 @@ const Login = () => {
 							type="password"
 							className="form-control"
 							placeholder="Password"
-							errorMessage="Password must be at least 6 characters long"
 							value={formData?.password?.value}
 							validation={isPasswordValid}
 						/>

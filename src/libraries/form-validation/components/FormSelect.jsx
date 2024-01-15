@@ -4,7 +4,6 @@ import "./validation.css";
 export default function FormSelect(props) {
 	const {
 		label,
-		errorMessage,
 		onChange,
 		validation,
 		options,
@@ -14,7 +13,7 @@ export default function FormSelect(props) {
 		...inputProps
 	} = props;
 
-	const [isError, handleChanged] = useFormElementValidation(
+	const [isError, handleChanged, errorMessage] = useFormElementValidation(
 		name,
 		value,
 		validation,

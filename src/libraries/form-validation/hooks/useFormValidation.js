@@ -1,31 +1,29 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export default function useFormValidation() {
 	const [formData, setFormData] = useState();
 	const [formNewData, setFormNewData] = useState();
 
-	const formRef = useRef(null);
+	const formRef = useCallback((form) => {
+		if (form) {
+			const formControls = form.elements;
 
-	useEffect(() => {
-		if (formRef.current == null) return;
-		
-		const formControls = formRef.current.elements;
-
-		const formElements = {};
-		for (let i = 0; i < formControls.length; i++) {
-			if (
-				formControls[i].type !== "submit" &&
-				formControls[i].type !== "button"
-			) {
-				// for each form element create default state
-				Object.assign(formElements, {
-					[formControls[i].name]: { value: undefined, isValid: false },
-				});
+			const formElements = {};
+			for (let i = 0; i < formControls.length; i++) {
+				if (
+					formControls[i].type !== "submit" &&
+					formControls[i].type !== "button"
+				) {
+					// for each form element create default state
+					Object.assign(formElements, {
+						[formControls[i].name]: { value: undefined, isValid: false },
+					});
+				}
 			}
-		}
 
-		setFormData(() => formElements);
-	}, [formRef]);
+			setFormData(() => formElements);
+		}
+	}, []);
 
 	useEffect(() => {
 		if (formData !== undefined) {

@@ -29,7 +29,6 @@ const Reset = () => {
 						type="email"
 						className="form-control"
 						placeholder="Email"
-						errorMessage="Invalid email"
 						value={formData?.email.value}
 						validation={isEmailValid}
 					/>

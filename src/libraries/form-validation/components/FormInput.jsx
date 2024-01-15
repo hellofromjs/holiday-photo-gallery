@@ -2,18 +2,10 @@ import useFormElementValidation from "../hooks/useFormElementValidation";
 import "./validation.css";
 
 export default function FormInput(props) {
-	const {
-		label,
-		errorMessage,
-		onChange,
-		validation,
-		className,
-		value,
-		name,
-		...inputProps
-	} = props;
+	const { label, onChange, validation, className, value, name, ...inputProps } =
+		props;
 
-	const [isError, handleChanged] = useFormElementValidation(
+	const [isError, handleChanged, errorMessage] = useFormElementValidation(
 		name,
 		value,
 		validation,
