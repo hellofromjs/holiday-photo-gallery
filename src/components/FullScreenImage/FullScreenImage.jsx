@@ -41,7 +41,7 @@ export default function FullScreenImage({ isOpen, setIsOpen, url }) {
 							aria-label="Close"
 						></button>
 					</div>
-					<div className="modal-body">
+					<div className="modal-body bg-black">
 						<img
 							style={{
 								maxWidth: "100%",

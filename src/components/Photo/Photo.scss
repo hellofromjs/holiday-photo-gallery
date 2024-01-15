@@ -1,6 +1,18 @@
+@import "~bootstrap/functions";
+@import "~bootstrap/variables";
+@import "~bootstrap/mixins";
+
 .photo-box {
 	position: relative;
 	cursor: pointer;
+
+	@include media-breakpoint-up(xl) {
+		&:hover {
+			.photo-box__delete {
+				display: block;
+			}
+		}
+	}
 
 	&__delete {
 		position: absolute;
@@ -9,5 +21,10 @@
 		background-color: white;
 		background-color: rgba(255, 255, 255, 0.5);
 		border-radius: 5px 0 0 0;
+		display: block;
+
+		@include media-breakpoint-up(xl) {
+			display: none;
+		}
 	}
 }
