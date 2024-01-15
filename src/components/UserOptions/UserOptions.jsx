@@ -39,7 +39,7 @@ export default function UserOptions() {
 						</li>
 						<li className="dropdown-item" onClick={userService.logout}>
 							<a className="dropdown-item" href="#">
-								Atsijungti
+								Sign out
 							</a>
 						</li>
 					</ul>
