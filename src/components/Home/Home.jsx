@@ -25,7 +25,7 @@ export default function Home() {
 		<div className="container">
 			<div className="py-3 d-flex gap-3">
 				<AddPhotoModal />
-				<LayoutSelection onSelect={setSelectedLayout} />
+				{photos.length > 0 && <LayoutSelection onSelect={setSelectedLayout} />}
 			</div>
 			<PhotoLayoutContainer layoutIndex={selectedLayout} photos={photos} />
 		</div>
